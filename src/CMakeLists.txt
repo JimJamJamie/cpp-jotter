@@ -7,7 +7,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(fmt)
 
 add_executable(helloworld)
+
 target_sources(helloworld PRIVATE helloworld.cpp)
-target_link_libraries(helloworld PRIVATE fmt::fmt)
 target_compile_features(helloworld PUBLIC cxx_std_17)
+target_link_libraries(helloworld PRIVATE fmt::fmt)
+
 set_target_properties(helloworld PROPERTIES CXX_STANDARD_REQUIRED ON CXX_EXTENSIONS OFF)

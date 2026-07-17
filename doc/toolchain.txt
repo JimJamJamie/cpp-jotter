@@ -1,0 +1,24 @@
+CPP Toolchain
+-------------
+
+Version control: git
+Build system:    CMake
+Generator:       Ninja
+Editor:          Kate
+String library:  {fmt}
+Standard libs:   stl and/or Boost
+Compiler:        Clang++ & g++
+Compiler flags:  -Wall -Wextra -pedantic (gcc)
+Sanitisers:      ASan, LSan, TSan, MSan, UBSan
+
+Dependencies:    git submodules or CMake fetchContent or Conan or vcpkg
+Logging:         Spdlog
+Static analyser: Cppcheck or clang-tidy
+Code formatter:  clang-format
+Test framework:  Catch2 or googletest
+Code coverage:   gcovr
+Profiler:        Intel VTune
+Debugger:        gdb
+Linker debug:    nm and CMake's Graphviz target dependency output
+Language Server: clangd
+Fuzzer:          By far the easiest way of getting into fuzzing these days is with clang's -fsanitize=fuzzer: https://llvm.org/docs/LibFuzzer.html

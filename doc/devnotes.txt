@@ -1,0 +1,6 @@
+CPP Dev Notes
+-------------
+
+C++ Modules are not usable after like 6 years, cool
+The execution order of statements in CMakeLists.txt is crucial
+clangd needs compile_commands.json to find header files
