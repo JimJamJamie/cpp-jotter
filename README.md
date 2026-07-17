@@ -1,6 +1,6 @@
-## CPP-Jotter
+# CPP-Jotter
 
 A cosy space to eat crayons and type C++ code.
 
-# TODO: 
+## TODO: 
 * Update build.sh
