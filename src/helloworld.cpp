@@ -40,14 +40,18 @@ public:
 
   void run() {
     screen.clear();
+    // Sets console text colour to green.
+    printer.print("\033[32m");
     printer.print("Hello World!");
+    // Resets console formatting modifiers.
+    printer.print("\033[0m");
     printer.print();
   }
 
   void quit() {
-    Printer::print("Press any key to exit...");
+    printer.print("Press any key to exit...");
     std::cin.get();
-    Screen::clear();
+    screen.clear();
   }
 };
 
