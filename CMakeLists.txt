@@ -5,6 +5,8 @@ project(helloworld
   LANGUAGES CXX
 )
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_BUILD_TYPE "Release")
 
 add_subdirectory(src)
+file(MAKE_DIRECTORY build)
