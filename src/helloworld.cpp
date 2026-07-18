@@ -1,3 +1,4 @@
+#include <map>
 #include <string>
 #include <iostream>
 #include <fmt/core.h>
@@ -5,22 +6,42 @@
 // An ERROR_LEVEL of zero means there are no errors to report.
 int ERROR_LEVEL = 0;
 
-
 class Printer {
 public:
 
   // Defaults to printing a newline when called with no args.
-  static void print(std::string printSpool = "\n") {
-    fmt::print(printSpool);
+  void printText(std::string printSpool = "\n") {
+      fmt::print(printSpool);
   }
 };
 
-class Screen: public Printer {
+class Screen {
 public:
 
+  Printer printer;
+
+  std::map<std::string, std::string> colourMap;
+
+  void createColourMap() {
+    colourMap.insert( {"Black"   ,"\033[30m"} );
+    colourMap.insert( {"Red"     ,"\033[31m"} );
+    colourMap.insert( {"Green"   ,"\033[32m"} );
+    colourMap.insert( {"Yellow"  ,"\033[33m"} );
+    colourMap.insert( {"Blue"    ,"\033[34m"} );
+    colourMap.insert( {"Magenta" ,"\033[35m"} );
+    colourMap.insert( {"Cyan"    ,"\033[36m"} );
+    colourMap.insert( {"White"   ,"\033[37m"} );
+    colourMap.insert( {"Reset"   ,"\033[0m" } );
+  }
+
   // This combination of control characters will clear the console.
-  static void clear() {
-    print("\033[H\033[J");
+  void clear() {
+    printer.printText("\033[H\033[J");
+  }
+
+  void setColour(std::string textColour) {
+    createColourMap();
+    printer.printText(colourMap.at(textColour));
   }
 };
 
@@ -40,16 +61,14 @@ public:
 
   void run() {
     screen.clear();
-    // Sets console text colour to green.
-    printer.print("\033[32m");
-    printer.print("Hello World!");
-    // Resets console formatting modifiers.
-    printer.print("\033[0m");
-    printer.print();
+    screen.setColour("Green");
+    printer.printText("Hello World!");
+    screen.setColour("Reset");
+    printer.printText();
   }
 
   void quit() {
-    printer.print("Press any key to exit...");
+    printer.printText("Press any key to exit...");
     std::cin.get();
     screen.clear();
   }
