@@ -1,7 +1,6 @@
 #include <map>
 #include <string>
 #include <iostream>
-#include <fmt/core.h>
 
 // An ERROR_LEVEL of zero means there are no errors to report.
 int ERROR_LEVEL = 0;
@@ -11,7 +10,7 @@ public:
 
   // Defaults to printing a newline when called with no args.
   void printText(std::string printSpool = "\n") {
-      fmt::print(printSpool);
+      std::cout << printSpool;
   }
 };
 
@@ -39,9 +38,10 @@ public:
     printer.printText("\033[H\033[J");
   }
 
+  // Defaults to resetting colours when called with no args.
   void setColour(std::string textColour) {
     createColourMap();
-    printer.printText(colourMap.at(textColour));
+    printer.printText(colourMap.at(textColour.data()));
   }
 };
 
@@ -68,6 +68,7 @@ public:
   }
 
   void quit() {
+    printer.printText();
     printer.printText("Press any key to exit...");
     std::cin.get();
     screen.clear();
