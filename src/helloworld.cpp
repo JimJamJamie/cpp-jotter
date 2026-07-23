@@ -1,3 +1,8 @@
+// ------------------
+//   helloworld.cpp
+// ------------------
+// © James Rennie 2026
+
 #include <map>
 #include <string>
 #include <iostream>
@@ -5,8 +10,7 @@
 class Printer {
 public:
 
-  // Defaults to printing a newline when called with no args.
-  void printText(std::string printSpool = "\n") {
+  void printText(std::string printSpool) {
       std::cout << printSpool;
   }
 };
@@ -29,7 +33,7 @@ public:
     colourMap.insert( {"Magenta" ,"\033[35m"} );
     colourMap.insert( {"Cyan"    ,"\033[36m"} );
     colourMap.insert( {"White"   ,"\033[37m"} );
-    colourMap.insert( {"Reset"   ,"\033[0m" } );
+    colourMap.insert( {"Default" ,"\033[0m" } );
   }
 
   // This combination of control characters will clear the console.
@@ -37,31 +41,37 @@ public:
     printer.printText("\033[H\033[J");
   }
 
-  // Defaults to resetting colours when called with no args.
-  void setColour(std::string textColour = "Reset") {
+  void setTextColour(std::string textColour) {
     printer.printText(colourMap.at(textColour.data()));
+  }
+
+  void toast(std::string bread) {
+    printer.printText(bread);
+  }
+
+  void newline() {
+    printer.printText("\n");
   }
 };
 
 class Application {
 private:
 
-  Printer printer;
   Screen screen;
 
 public:
 
   void run() {
     screen.clear();
-    screen.setColour("Green");
-    printer.printText("Hello World!");
-    printer.printText();
+    screen.setTextColour("Green");
+    screen.toast("Hello World!");
+    screen.newline();
   }
 
   void quit() {
-    screen.setColour();
-    printer.printText();
-    printer.printText("Press any key to exit...");
+    screen.setTextColour("Default");
+    screen.newline();
+    screen.toast("Press any key to exit...");
     std::cin.get();
     screen.clear();
   }
