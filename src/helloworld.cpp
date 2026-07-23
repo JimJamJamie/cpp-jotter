@@ -2,9 +2,6 @@
 #include <string>
 #include <iostream>
 
-// An ERROR_LEVEL of zero means there are no errors to report.
-int ERROR_LEVEL = 0;
-
 class Printer {
 public:
 
@@ -15,13 +12,15 @@ public:
 };
 
 class Screen {
-public:
+private:
 
   Printer printer;
 
   std::map<std::string, std::string> colourMap;
 
-  void createColourMap() {
+public:
+
+  Screen() {
     colourMap.insert( {"Black"   ,"\033[30m"} );
     colourMap.insert( {"Red"     ,"\033[31m"} );
     colourMap.insert( {"Green"   ,"\033[32m"} );
@@ -39,35 +38,28 @@ public:
   }
 
   // Defaults to resetting colours when called with no args.
-  void setColour(std::string textColour) {
-    createColourMap();
+  void setColour(std::string textColour = "Reset") {
     printer.printText(colourMap.at(textColour.data()));
   }
 };
 
-class ErrorHandler {
-public:
-
-  static void setErrorLevel(int errorLevel) {
-    ERROR_LEVEL = errorLevel;
-  }
-};
-
 class Application {
-public:
+private:
 
   Printer printer;
   Screen screen;
+
+public:
 
   void run() {
     screen.clear();
     screen.setColour("Green");
     printer.printText("Hello World!");
-    screen.setColour("Reset");
     printer.printText();
   }
 
   void quit() {
+    screen.setColour();
     printer.printText();
     printer.printText("Press any key to exit...");
     std::cin.get();
@@ -75,17 +67,35 @@ public:
   }
 };
 
+class ErrorHandler {
+private:
+
+  // An ERROR_LEVEL of zero means there are no errors to report.
+  int ERROR_LEVEL = 0;
+
+public:
+
+  void setErrorLevel(int errorLevel) {
+    ERROR_LEVEL = errorLevel;
+  }
+
+  int getErrorLevel() {
+    return ERROR_LEVEL;
+  }
+};
+
 int main() {
 
   Application app;
+  ErrorHandler errHandler;
 
   try {
     app.run();
   }
   catch( ... ) {
-    ErrorHandler::setErrorLevel(1);
+    errHandler.setErrorLevel(1);
   }
 
   app.quit();
-  return ERROR_LEVEL;
+  return errHandler.getErrorLevel();
 }
